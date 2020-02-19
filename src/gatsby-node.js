@@ -141,6 +141,11 @@ exports.createResolvers = ({ cache, createResolvers }, options) => {
         type: 'File',
         resolve: async (source, _, context) => {
           const fileNodeMap = await cache.get(getCacheKeyForNodeId(source.id));
+
+          if (!fileNodeMap) {
+            return null
+          }
+
           return context.nodeModel.getNodeById({ id: fileNodeMap[name] });
         },
       },
